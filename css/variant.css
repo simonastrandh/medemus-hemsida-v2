@@ -135,3 +135,8 @@
 
 /* Navigering och sidfot ligger i linje med sidans innehåll (samma sidmarginaler) */
 .v2-header .container, .v2-footer .container { width: min(100% - 2rem, 1240px); }
+
+/* Boka tid: kontaktkortet och priserna följer med när man scrollar förbi det långa formuläret (endast dator) */
+@media (min-width: 861px) and (min-height: 640px) {
+  .boka-side { position: sticky; top: 96px; }
+}
