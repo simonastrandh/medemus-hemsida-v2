@@ -112,8 +112,9 @@
 @media (max-width: 860px) {
   .pg-row { grid-template-columns: 1fr; }
   .pg-hero { padding-block: 16px 32px; }
-  .hero-frame { border-radius: 20px; aspect-ratio: 358 / 300; }
-  .hero-frame__cta { min-width: 0; top: 60%; padding-inline: 1.75rem; }
+  .hero-frame { border-radius: 20px; aspect-ratio: 1310 / 693; }
+  .hero-frame img { object-position: center; }
+  .hero-frame__cta { min-width: 0; top: 52%; min-height: 44px; padding: 0.625rem 1.25rem; font-size: 0.9375rem; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); }
   .photo-frame { padding: 0 16px 16px 0; }
   .photo-frame::before { inset: 16px 0 0 16px; border-radius: 20px; }
   .photo-frame img { border-radius: 20px; }
