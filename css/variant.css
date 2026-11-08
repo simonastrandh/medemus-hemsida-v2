@@ -132,3 +132,6 @@
   .contact-card__row .copy-field__label { display: none; }
   .contact-card .copy-field__btn { padding: 10px 12px; }
 }
+
+/* Navigering och sidfot ligger i linje med sidans innehåll (samma sidmarginaler) */
+.v2-header .container, .v2-footer .container { width: min(100% - 2rem, 1240px); }
