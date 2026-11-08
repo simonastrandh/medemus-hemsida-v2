@@ -1,0 +1,799 @@
+/* ==========================================================================
+   Variation 2 — ljus, lugn startsida med utgångspunkt i nuvarande medemus.se
+   Bygger enbart på designsystemets variabler (css/variables.css).
+   Kontraster (mot bakgrunden de används på):
+     --color-text on white 11,3:1   --color-text-muted on surface 5,0:1
+     --color-green-deep on white 6,2:1 / on tint 5,5:1
+     --color-on-green on --color-green-primary 6,1:1
+     white on --color-dark 17,1:1   --color-on-dark-muted on --color-dark 10,5:1
+   ========================================================================== */
+
+html { scroll-padding-top: 96px; scroll-behavior: smooth; }
+
+.container {
+  width: min(100% - 2rem, var(--container-width));
+  margin-inline: auto;
+}
+
+/* --- Hoppa till innehåll (WCAG 2.4.1) --- */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-dark);
+  color: var(--color-white);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+.skip-link:focus { top: 1rem; }
+
+/* --- Header (fast överst) --- */
+.v2-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+.v2-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding-block: 0.75rem;
+}
+/* Endast desktop: Safari klipper annars även nedåt och gömmer mobilmenyn */
+@media (min-width: 861px) { .v2-header { overflow-x: clip; } }
+/* "Boka tid" glider in från höger när hero-knappen scrollats förbi.
+   På desktop ligger menylänkarna först längst till höger (där knappen ska landa)
+   och glider åt vänster i takt med att knappen kommer in. --cta-shift sätts av js/main.js. */
+.v2-header__cta {
+  flex: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(56px);
+  transition: transform 0.45s ease, opacity 0.35s ease, visibility 0s linear 0.45s;
+}
+.v2-header.is-cta-visible .v2-header__cta {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+@media (min-width: 861px) {
+  .v2-nav {
+    transform: translateX(var(--cta-shift, 0px));
+    transition: transform 0.45s ease;
+  }
+  .v2-header.is-cta-visible .v2-nav { transform: none; }
+}
+.v2-nav__cta { display: none; }
+.v2-logo { display: inline-flex; align-items: center; }
+.v2-logo img { height: 48px; width: auto; }
+
+.v2-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-left: auto;
+}
+.v2-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+.v2-nav__link:hover { text-decoration: underline; text-underline-offset: 6px; }
+.v2-nav__link[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-color: var(--color-green-dark);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+.nav-toggle {
+  display: none;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1.5px solid var(--color-border-interactive);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* --- Sektioner --- */
+.v2-section { padding-block: var(--space-xl); }
+.v2-section--surface { background: var(--color-surface); }
+.v2-section--tint { background: var(--color-green-tint); }
+
+.v2-eyebrow {
+  display: inline-block;
+  margin-bottom: var(--space-xs);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-green-deep);
+}
+
+/* --- Hero: bilden täcker hela bredden, allt fokus på "Boka tid" ---
+   Ett jämnt mörkt lager (--color-dark, 76 %) ligger mellan foto och innehåll:
+   vit text får minst 6,5:1 kontrast även mot de ljusaste delarna av bilden.
+   Knapp: --color-on-green på --color-green-primary 6,1:1. */
+.v2-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 560px;
+  padding-block: var(--space-xl);
+  background: var(--color-dark) url("../assets/images/hero-mottagning.webp") center / cover no-repeat;
+}
+.v2-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-dark);
+  opacity: 0.76;
+}
+.v2-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.v2-hero h1 {
+  color: var(--color-white);
+  font-size: clamp(1.5rem, 2.5vw + 0.75rem, 2.125rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.v2-hero__sub {
+  color: var(--color-white);
+  font-size: var(--fs-base);
+  margin-bottom: var(--space-lg);
+}
+.btn--xl {
+  min-height: 72px;
+  padding: 1.25rem 4rem;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+.v2-hero :focus-visible { outline: 3px solid var(--color-white); outline-offset: 4px; }
+
+.v2-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+
+.btn--outline-light {
+  background: transparent;
+  color: var(--color-white);
+  border: 1.5px solid var(--color-white);
+}
+.btn--outline-light:hover { background: var(--color-white); color: var(--color-dark); }
+
+/* --- Viktiga punkter (som i Ekopeak): bock i cirkel + text, på mycket ljusgrönt band ---
+   Text --color-text på --color-green-tint 10,1:1. Bock --color-green-deep på vit 6,2:1. */
+.v2-trust {
+  background: var(--color-green-tint);
+  padding-block: var(--space-md);
+}
+.v2-trust__list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-sm);
+}
+.v2-trust__list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+.v2-check {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: 0 2px 8px rgba(74, 107, 31, 0.15);
+}
+.v2-check svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--color-green-deep);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- Två kolumner --- */
+.v2-split {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+.v2-split p { color: var(--color-text); }
+
+/* Lista med exempel — ren lista, inte klickbar */
+.v2-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--space-md);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.v2-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-heading);
+  font-weight: 500;
+}
+.v2-list li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-green-dark);
+}
+
+/* --- Två kort bredvid varandra: behandling och utredning ---
+   Illustrationerna är dekorativa (aria-hidden) och använder bara designsystemets färger. */
+.v2-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  align-items: stretch;
+}
+.v2-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  box-shadow: 0 6px 24px rgba(58, 58, 60, 0.06);
+}
+.v2-card__icon { flex: none; width: 168px; height: 168px; margin-bottom: var(--space-sm); }
+.v2-card h2 { font-size: clamp(1.5rem, 1.5vw + 1rem, 1.875rem); }
+.v2-card p { color: var(--color-text); max-width: 34rem; }
+.v2-card .v2-list { margin-top: var(--space-sm); text-align: left; width: 100%; }
+.v2-collapsible { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+.ic-blob { fill: var(--color-green-tint); }
+.ic-lime { fill: var(--color-green-primary); }
+.ic-deep { fill: var(--color-green-deep); }
+.ic-line { fill: var(--color-border); }
+.ic-bubble { stroke: var(--color-green-deep); stroke-width: 6; stroke-linejoin: round; }
+.ic-bubble--white { fill: var(--color-white); }
+.ic-bubble--lime { fill: var(--color-green-primary); }
+.ic-board { fill: var(--color-white); stroke: var(--color-green-deep); stroke-width: 6; }
+.ic-clip { fill: var(--color-green-primary); stroke: var(--color-green-deep); stroke-width: 6; }
+.ic-tick { fill: none; stroke: var(--color-green-deep); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.ic-lens { fill: var(--color-green-primary); fill-opacity: 0.35; stroke: var(--color-green-deep); stroke-width: 7; }
+.ic-handle { fill: none; stroke: var(--color-green-deep); stroke-width: 10; stroke-linecap: round; }
+
+/* --- Utfällbar lista: bara på smala skärmar där listan är en enda kolumn --- */
+.v2-expand {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0;
+  margin-top: var(--space-xs);
+  background: none;
+  border: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-green-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.v2-expand svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.25s ease; }
+.is-expanded .v2-expand svg { transform: rotate(180deg); }
+
+/* --- Footer ---
+   Vit/ljus text på --color-dark: 17,1:1 / 10,5:1. Rubriker i --color-green-primary 8,5:1. */
+.v2-footer {
+  background: var(--color-dark);
+  color: var(--color-on-dark-muted);
+  padding-block: var(--space-lg) var(--space-sm);
+  font-size: var(--fs-sm);
+}
+.v2-footer__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-dark-line);
+}
+.v2-footer__title {
+  margin-bottom: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-green-primary);
+}
+.v2-footer__text {
+  margin: 0;
+  max-width: 34rem;
+  font-size: var(--fs-base);
+  font-style: normal;
+  color: var(--color-white);
+}
+.v2-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0 var(--space-md);
+  padding-top: var(--space-sm);
+}
+.v2-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-white);
+}
+.v2-footer a:hover { color: var(--color-green-primary); }
+
+/* ==========================================================================
+   Delade sidkomponenter (startsida + undersidor)
+   Kontraster: --color-text på vit/ljusgrön 10–11:1, --color-green-deep på vit 6,2:1
+   och på --color-green-tint 5,5:1, vit text på --color-green-deep / mörk yta 6,2–17:1.
+   ========================================================================== */
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.page-hero { background: var(--color-green-tint); padding-block: var(--space-xl); text-align: center; }
+.page-hero__inner { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
+.page-hero h1 { margin: 0; font-size: clamp(2.25rem, 3vw + 1.25rem, 3.5rem); line-height: 1.1; }
+.page-hero__lead { max-width: 46rem; font-size: var(--fs-lg); font-weight: 500; color: var(--color-text); }
+.page-hero__lead + .page-hero__lead { margin-top: 0; font-weight: 400; font-size: 1.0625rem; }
+.page-hero__icon { width: 168px; height: 168px; }
+.hero-steps { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-sm) var(--space-md); list-style: none; padding: 0; margin: var(--space-sm) 0 0; }
+.hero-steps li { display: flex; align-items: center; gap: 12px; font-weight: 500; }
+.hero-steps .num { width: 36px; height: 36px; font-size: 1rem; }
+
+.section-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; max-width: 48rem; margin: 0 auto var(--space-lg); }
+.section-head h2 { margin: 0; font-size: clamp(1.75rem, 2vw + 1rem, 2.25rem); line-height: 1.2; }
+.section-head p { margin: 0; font-size: var(--fs-lg); font-weight: 500; color: var(--color-text); }
+.section-head .v2-eyebrow { margin: 0; }
+.v2-section--tint { background: var(--color-green-tint); }
+
+.grid { display: grid; gap: var(--space-md); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
+.grid--5 { grid-template-columns: repeat(5, 1fr); gap: 25px; }
+
+.num { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--color-green-primary); color: var(--color-on-green); font-family: var(--font-heading); font-weight: 600; font-size: 1.25rem; }
+
+.tile { display: flex; flex-direction: column; gap: 12px; padding: var(--space-md) 28px; background: var(--color-surface); border-radius: 20px; }
+.tile--white { background: var(--color-white); border: 1px solid var(--color-border); }
+.tile--tint { background: var(--color-green-tint); }
+.tile__icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--color-white); }
+.tile--white .tile__icon, .tile--tint .tile__icon { background: var(--color-green-tint); }
+.tile--tint .tile__icon { background: var(--color-white); }
+.tile__icon svg { width: 20px; height: 20px; fill: none; stroke: var(--color-green-deep); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.tile h3 { margin: 0; font-size: 1.125rem; font-weight: 500; line-height: 1.35; }
+.tile p { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--color-text); }
+.tile__big { font-family: var(--font-heading); font-weight: 600; font-size: 2.25rem; line-height: 1.15; color: var(--color-green-deep); }
+.tile--center { align-items: center; text-align: center; }
+.tile__dot { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-green-tint); }
+.tile__dot::after { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--color-green-dark); }
+
+.step { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 28px 20px; background: var(--color-surface); border-radius: 20px; text-align: center; font-family: var(--font-heading); font-weight: 500; font-size: 1.0625rem; }
+.v2-section--surface .step { background: var(--color-white); }
+
+.price-card { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: var(--space-md); background: var(--color-surface); border-radius: 20px; text-align: center; }
+.price-card dt { font-weight: 500; font-size: 1.0625rem; color: var(--color-text-muted); }
+.price-card dd { margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 2.5rem; line-height: 1.2; }
+.price-notes { display: grid; gap: 8px; justify-items: center; margin-top: var(--space-md); text-align: center; }
+.price-notes p { margin: 0; max-width: 46rem; }
+.price-notes p:first-child { font-weight: 500; }
+.price-notes p + p { color: var(--color-text-muted); font-size: 0.9375rem; }
+
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; text-align: left; }
+.checks li { display: flex; gap: 12px; align-items: flex-start; line-height: 1.65; }
+.checks li::before { content: ""; flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--color-green-tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a6b1f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 14px no-repeat; }
+.tile--white .checks li::before, .v2-section--surface .checks li::before { background-color: var(--color-green-tint); }
+
+.doctor { display: grid; grid-template-columns: 400px 1fr; gap: var(--space-lg); align-items: start; }
+.doctor__photo { display: block; width: 100%; aspect-ratio: 5 / 6; object-fit: cover; object-position: top; border-radius: 28px; background: var(--color-green-tint); }
+.doctor__text { display: grid; gap: 12px; }
+.doctor__text h2 { margin: 0; font-size: clamp(2rem, 2vw + 1rem, 2.75rem); line-height: 1.15; }
+.doctor__role { margin: 0; font-size: var(--fs-lg); font-weight: 500; color: var(--color-text-muted); }
+.quote { margin: var(--space-xs) 0 var(--space-xs); padding: 4px 0 4px 20px; border-left: 4px solid var(--color-green-primary); font-size: 1.1875rem; font-weight: 500; line-height: 1.6; }
+.quote p { max-width: none; margin: 0; }
+
+.topic-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-md); }
+.topic-grid .tile { flex: 0 1 calc((100% - 3 * var(--space-md)) / 4); }
+
+.find { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: start; }
+.find__text { display: grid; gap: var(--space-sm); }
+.find__text h2 { margin: 0; font-size: clamp(1.75rem, 2vw + 1rem, 2.25rem); line-height: 1.2; }
+.find__text .v2-eyebrow { margin: 0; }
+.address { font-style: normal; font-size: 1.0625rem; line-height: 1.6; }
+.address strong { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 1.25rem; margin-bottom: 4px; }
+.route { list-style: none; margin: 0; padding: var(--space-md); display: grid; gap: 20px; background: var(--color-surface); border-radius: 20px; counter-reset: route; }
+.v2-section--surface .route { background: var(--color-white); }
+.route li { display: flex; gap: 16px; align-items: flex-start; counter-increment: route; }
+.route li::before { content: counter(route); flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-green-primary); color: var(--color-on-green); font-family: var(--font-heading); font-weight: 600; }
+.route strong { display: block; font-family: var(--font-heading); font-weight: 500; font-size: 1.0625rem; line-height: 1.4; }
+.route span { display: block; font-size: 0.9375rem; color: var(--color-text-muted); line-height: 1.6; }
+.find__media img { display: block; width: 100%; height: 520px; object-fit: cover; border-radius: 24px; background: var(--color-green-tint); }
+.link-arrow { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; color: var(--color-green-deep); text-underline-offset: 4px; }
+.link-arrow svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Dragspel (details/summary) */
+.acc-layout { display: grid; grid-template-columns: 460px 1fr; gap: 48px; align-items: stretch; }
+.acc-layout__photo { margin: 0; overflow: hidden; border-radius: 28px; background: var(--color-green-tint); }
+.acc-layout__photo img { display: block; width: 100%; height: 100%; min-height: 520px; object-fit: cover; }
+.acc-list { display: grid; gap: 12px; align-content: start; }
+.acc-list__head { display: grid; gap: 12px; margin-bottom: var(--space-xs); }
+.acc-list__head h2 { margin: 0; font-size: clamp(1.75rem, 2vw + 1rem, 2.25rem); line-height: 1.2; }
+.acc-list__head p { margin: 0; color: var(--color-text-muted); }
+.acc-list__head .v2-eyebrow { margin: 0; }
+.acc { background: var(--color-white); border: 1px solid var(--color-border); border-radius: 16px; }
+.acc[open] { border: 1.5px solid var(--color-green-deep); }
+.acc summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 44px; padding: 18px 24px; cursor: pointer; list-style: none; font-family: var(--font-heading); font-weight: 500; font-size: 1.125rem; line-height: 1.4; border-radius: 16px; }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary::after { content: ""; flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--color-green-tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a6b1f' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center / 18px no-repeat; }
+.acc[open] summary::after { background: var(--color-green-deep) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E") center / 18px no-repeat; }
+.acc__body { padding: 0 24px 22px; display: grid; gap: 14px; }
+.acc__body p { margin: 0; max-width: none; line-height: 1.65; }
+
+/* Kallelse (centrerad avslutning) */
+.cta-band { text-align: center; }
+.cta-band .container { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); }
+.cta-band h2 { margin: 0; font-size: clamp(1.75rem, 2vw + 1rem, 2.25rem); line-height: 1.2; }
+.cta-band p { max-width: 46rem; margin: 0 0 var(--space-xs); font-size: var(--fs-lg); font-weight: 500; }
+
+/* Formulär */
+.form-card { display: grid; gap: 24px; max-width: 720px; margin-inline: auto; padding: 48px; background: var(--color-white); border: 1px solid var(--color-border); border-radius: 24px; box-shadow: 0 10px 30px rgba(58, 58, 60, 0.08); }
+.field label, .form-card legend { display: block; margin-bottom: 8px; padding: 0; font-weight: 600; font-size: 0.9375rem; }
+.field input { width: 100%; min-height: 52px; padding: 0 16px; border: 1.5px solid var(--color-border-interactive); border-radius: 12px; background: var(--color-white); color: var(--color-text); font: inherit; }
+.field input::placeholder { color: var(--color-text-muted); opacity: 1; }
+.field input[aria-invalid="true"] { border-color: var(--color-error-text); }
+.field__error { margin: 6px 0 0; color: var(--color-error-text); font-size: 0.875rem; font-weight: 500; }
+.form-card fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.radio-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.radio-card { position: relative; display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 16px 20px; background: var(--color-white); border: 1.5px solid var(--color-border-interactive); border-radius: 14px; cursor: pointer; font-family: var(--font-heading); font-weight: 500; font-size: 1.0625rem; }
+.radio-card input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.radio-card__dot { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border: 2px solid var(--color-border-interactive); border-radius: 50%; background: var(--color-white); }
+.radio-card input:checked + .radio-card__dot { border-color: var(--color-green-deep); }
+.radio-card input:checked + .radio-card__dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--color-green-deep); }
+.radio-card:has(input:checked) { background: var(--color-green-tint); border-color: var(--color-green-deep); }
+.radio-card:has(input:focus-visible) { outline: var(--focus-ring); outline-offset: 2px; }
+.check { display: flex; gap: 12px; align-items: flex-start; line-height: 1.6; font-size: 0.9375rem; }
+.check input { flex: none; width: 24px; height: 24px; margin: 0; accent-color: var(--color-green-deep); }
+.check a { font-weight: 600; color: var(--color-green-deep); }
+.btn--l { width: 100%; justify-content: center; min-height: 56px; font-size: 1.125rem; font-weight: 700; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); }
+.form-status { margin: 0; min-height: 1.5em; font-weight: 500; }
+.form-status.is-error { color: var(--color-error-text); }
+.form-note { margin: var(--space-sm) 0 0; text-align: center; color: var(--color-text-muted); }
+.form-note a { font-weight: 600; color: var(--color-green-deep); }
+
+/* Kontaktsektion med e-postkort */
+.contact { background: var(--color-green-tint); padding-block: var(--space-xl); }
+.contact__inner { display: flex; flex-direction: column; align-items: center; gap: 48px; }
+.contact__head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+.contact__head h2 { margin: 0; font-size: clamp(2rem, 3vw + 1rem, 2.75rem); line-height: 1.15; }
+.contact__head p { margin: 0; font-size: var(--fs-lg); font-weight: 500; }
+.contact__head .v2-eyebrow { margin: 0; }
+.mail-card { width: min(100%, 600px); overflow: hidden; background: var(--color-white); border-radius: 24px; box-shadow: 0 10px 30px rgba(58, 58, 60, 0.1); }
+.mail-card__body { display: grid; gap: 16px; padding: 40px 48px 32px; justify-items: center; }
+.mail-card--left .mail-card__body { justify-items: stretch; text-align: left; }
+.mail-card__label { margin: 0; font-size: var(--fs-label); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-green-deep); }
+.mail-card h2, .mail-card h3 { margin: 0; font-size: 1.75rem; line-height: 1.25; }
+.mail-card p { max-width: none; margin: 0; }
+.copy-field { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 8px 8px 24px; background: var(--color-surface); border: 1.5px solid var(--color-border-interactive); border-radius: 16px; }
+.copy-field__value { font-family: var(--font-heading); font-weight: 600; font-size: 1.5rem; line-height: 1.3; overflow-wrap: anywhere; }
+.copy-field__btn { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 20px; background: var(--color-text); color: var(--color-white); border: 0; border-radius: 12px; font: inherit; font-weight: 600; cursor: pointer; }
+.copy-field__btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.copy-field__btn:hover { background: var(--color-dark); }
+.copy-field.is-copied { background: var(--color-green-tint); border-color: var(--color-green-deep); }
+.copy-field.is-copied .copy-field__btn { background: var(--color-green-deep); }
+.mail-card__phone { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding: 20px 48px; background: var(--color-surface); border-top: 1px solid var(--color-border); color: var(--color-text-muted); }
+.mail-card__phone svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mail-card__phone a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--color-text); }
+.contact-grid { display: grid; grid-template-columns: 640px 1fr; gap: var(--space-md); align-items: start; max-width: var(--container-width); margin-inline: auto; }
+.contact-grid .mail-card { width: 100%; }
+.book-card { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; padding: 40px; background: var(--color-green-tint); border-radius: 24px; }
+.book-card h2 { margin: 0; font-size: 1.75rem; line-height: 1.25; }
+.book-card p { margin: 0; line-height: 1.65; }
+.page-contact { background: var(--color-surface); padding-block: var(--space-xl); }
+
+.v2-card__cta { margin-top: auto; padding-top: var(--space-md); }
+.v2-card .checks { width: 100%; margin-top: var(--space-xs); }
+
+/* Fokus i ljusa kort på ljusgrön/vit yta */
+.acc summary:focus-visible, .copy-field__btn:focus-visible, .check input:focus-visible, .field input:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.copy-field__btn:focus-visible { outline-offset: 3px; }
+
+/* --- Fokus på mörk yta (3:1+ mot bakgrunden) --- */
+.v2-footer :focus-visible,
+.skip-link:focus-visible {
+  outline: 3px solid var(--color-green-primary);
+  outline-offset: 3px;
+}
+
+/* --- Minskad rörelse (WCAG 2.3.3) --- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* --- Mobil --- */
+@media (max-width: 860px) {
+  .v2-section { padding-block: var(--space-lg); }
+  .v2-trust__list { flex-direction: column; align-items: flex-start; padding-inline: 0; }
+  .v2-trust { padding-block: var(--space-sm); }
+  .v2-footer__grid { grid-template-columns: 1fr; gap: var(--space-md); }
+  .v2-split { grid-template-columns: 1fr; gap: var(--space-md); }
+  .v2-cards { grid-template-columns: 1fr; }
+  .v2-card { padding: var(--space-md) var(--space-sm); }
+  .v2-list { grid-template-columns: 1fr; }
+
+  /* Hopfälld: Depression och Ångest syns helt, Sömnstörningar tonas ut */
+  .v2-collapsible:not(.is-expanded) .v2-list {
+    max-height: 10.25rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  }
+  .v2-collapsible.is-expanded .v2-list { max-height: 40rem; }
+  .v2-list { transition: max-height 0.35s ease; }
+  .v2-expand { display: inline-flex; }
+  .v2-hero { min-height: 0; padding-block: var(--space-lg); }
+  .btn--xl { min-height: 56px; min-width: 200px; justify-content: center; padding: 0.875rem 2.25rem; font-size: 1.125rem; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); }
+
+  .nav-toggle { display: inline-flex; }
+  .v2-header__inner { flex-wrap: wrap; }
+  .v2-header__inner { gap: var(--space-xs); }
+  .v2-logo img { height: 40px; }
+  .v2-header__cta { display: none; }
+  .nav-toggle { margin-left: auto; }
+  .v2-nav {
+    order: 3;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    padding-bottom: var(--space-sm);
+  }
+  .v2-nav__link { border-top: 1px solid var(--color-border); }
+  .v2-nav .v2-nav__cta { display: inline-flex; justify-content: center; margin-top: var(--space-sm); min-height: 52px; }
+}
+
+
+/* --- Mobil: undersidor och nya komponenter --- */
+@media (max-width: 860px) {
+  .page-hero { padding-block: var(--space-lg); }
+  .page-hero__icon { width: 136px; height: 136px; }
+  .grid--3, .grid--4, .grid--5 { grid-template-columns: 1fr; }
+  .grid--5 { gap: var(--space-xs); }
+  .step { flex-direction: row; justify-content: flex-start; text-align: left; padding: 16px 20px; }
+  .step .num { width: 40px; height: 40px; font-size: 1.0625rem; }
+  .topic-grid .tile { flex: 1 1 100%; }
+  .doctor { grid-template-columns: 1fr; gap: var(--space-md); }
+  .find { grid-template-columns: 1fr; gap: var(--space-md); }
+  .find__media img { height: 280px; }
+  .acc-layout { grid-template-columns: 1fr; gap: var(--space-md); }
+  .acc-layout__photo img { min-height: 0; height: 220px; }
+  .contact { padding-block: var(--space-lg); }
+  .contact-grid { grid-template-columns: 1fr; }
+  .book-card { padding: var(--space-md); }
+  .form-card { padding: var(--space-md); }
+  .price-card dd { font-size: 2rem; }
+  .price-cards { gap: var(--space-xs); }
+  .price-card { flex-direction: row; justify-content: space-between; padding: 20px 24px; }
+  .price-card dd { font-size: 1.625rem; }
+}
+@media (max-width: 560px) {
+  .mail-card__body { padding: 28px 20px 24px; }
+  .mail-card__phone { padding: 16px 20px; }
+  .copy-field { flex-direction: column; align-items: stretch; padding: 16px; text-align: center; }
+  .copy-field__value { font-size: 1.375rem; }
+  .copy-field__btn { justify-content: center; min-height: 48px; }
+  .radio-cards { grid-template-columns: 1fr; }
+  .hero-steps { flex-direction: column; align-items: flex-start; }
+}
+
+/* Informationskort och centrerade anmärkningar (Om oss) */
+.info-card { max-width: 720px; margin: var(--space-md) auto 0; padding: 32px 40px; background: var(--color-white); border-radius: 20px; }
+.note-center { max-width: 46rem; margin: var(--space-md) auto 0; text-align: center; font-weight: 500; font-size: var(--fs-base); }
+@media (max-width: 860px) { .info-card { padding: var(--space-sm) var(--space-sm); } }
+
+/* Dolda element ska vara dolda även för SVG */
+[hidden] { display: none !important; }
+
+/* Mäter menyns förskjutning utan att animera */
+.v2-header.is-measuring .v2-nav,
+.v2-header.is-measuring .v2-header__cta { transition: none !important; }
+
+.center-row { display: flex; justify-content: center; margin-top: var(--space-md); }
+.btn--auto { width: auto; padding-inline: 2.25rem; }
+.steps { list-style: none; padding: 0; margin: 0; }
+
+.form-note { max-width: none; }
+.page-hero__lead { max-width: 52rem; }
+
+/* Radbrytning som bara gäller bred skärm */
+@media (min-width: 861px) { .br-desktop { display: inline; } }
+@media (max-width: 860px) { .br-desktop { display: none; } }
+
+/* "Kopiera e-postadress" – hela texten bara på smal skärm */
+.copy-field__suffix { display: none; }
+@media (max-width: 560px) { .copy-field__suffix { display: inline; } .copy-field.is-copied .copy-field__suffix { display: none; } }
+
+/* Hitta hit på Kontakt: text, bild, vägbeskrivning (på mobil ligger bilden före vägbeskrivningen) */
+.find--stacked { grid-template-areas: "text media" "route media"; row-gap: var(--space-sm); }
+.find--stacked .find__text { grid-area: text; }
+.find--stacked .find__media { grid-area: media; }
+.find--stacked .find__route { grid-area: route; }
+@media (max-width: 860px) {
+  .find--stacked { grid-template-areas: "text" "media" "route"; row-gap: var(--space-md); }
+}
+
+/* Fotot styr inte höjden på raden – listan gör det */
+.acc-layout__photo { position: relative; min-height: 520px; }
+.acc-layout__photo img { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; object-fit: cover; }
+@media (max-width: 860px) { .acc-layout__photo { min-height: 220px; } .acc-layout__photo img { height: 100%; } }
+
+/* Behandling: bilden har fast höjd och påverkas inte när dragspelen öppnas */
+.acc-layout { align-items: start; }
+.acc-layout__photo { height: 690px; min-height: 0; align-self: start; }
+@media (max-width: 860px) { .acc-layout__photo { height: 220px; } }
+.acc { border: 1px solid var(--color-border); }
+.acc[open] { border: 1px solid var(--color-green-deep); box-shadow: 0 0 0 0.5px var(--color-green-deep); }
+.acc__body { overflow: hidden; }
+
+/* Kontakt: bilden ligger bredvid e-postkortet, kartan i "Hitta hit" */
+.contact-grid { align-items: stretch; }
+.contact-photo { position: relative; margin: 0; min-height: 260px; overflow: hidden; border-radius: 24px; background: var(--color-green-tint); }
+.contact-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.find__media .map { display: block; width: 100%; height: 520px; border: 0; border-radius: 24px; background: var(--color-green-tint); }
+@media (max-width: 860px) {
+  .contact-photo { min-height: 0; height: 220px; }
+  .find__media .map { height: 300px; }
+}
+
+/* Texttunga sidor (integritetspolicy) */
+.prose { max-width: 760px; }
+.prose h2 { margin: var(--space-md) 0 var(--space-xs); font-size: 1.625rem; line-height: 1.25; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3 { margin: var(--space-sm) 0 var(--space-xs); font-size: 1.25rem; }
+.prose p { max-width: none; margin: 0 0 var(--space-sm); line-height: 1.7; }
+.prose a { color: var(--color-accent); }
+
+/* Startsidans kort: hover-effekt, och på desktop är hela kortet klickbart (Läs mer-länken sträcks över kortet) */
+.v2-card { position: relative; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+@media (min-width: 861px) {
+  .v2-card__cta .btn::after { content: ""; position: absolute; inset: 0; border-radius: 24px; }
+  .v2-card:has(.v2-card__cta .btn:focus-visible) { outline: var(--focus-ring); outline-offset: 4px; }
+}
+@media (min-width: 861px) and (hover: hover) {
+  .v2-card { cursor: pointer; }
+  .v2-card:hover { transform: translateY(-6px); border-color: var(--color-green-primary); box-shadow: 0 16px 40px rgba(58, 58, 60, 0.14); }
+  .v2-card:hover .v2-card__cta .btn { background: var(--color-text); color: var(--color-white); }
+}
+
+/* Hero med ikon högst upp: mindre avstånd mellan menyn och ikonen */
+.page-hero--icon { padding-top: 2.5rem; }
+@media (max-width: 860px) { .page-hero--icon { padding-top: 1.75rem; } }
+
+/* E-postadressen i kopiera-fältet skalar med kortets bredd så att den aldrig bryts mitt i ordet */
+.mail-card { container-type: inline-size; }
+.copy-field__value { white-space: nowrap; overflow-wrap: normal; }
+@media (max-width: 560px) {
+  .copy-field__value { font-size: clamp(0.8125rem, calc((100cqw - 74px) / 12), 1.375rem); }
+}
+
+/* Kontakt: sidmarginal även på smal skärm */
+.contact-grid { width: min(100% - 2rem, var(--container-width)); }
+
+/* Hamburgarmeny: tre streck utan ruta som animeras till ett kryss när menyn öppnas */
+.nav-toggle {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius);
+  color: var(--color-text);
+}
+.nav-toggle__bars { position: relative; display: block; width: 26px; height: 20px; }
+.nav-toggle__bars span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.28s ease, opacity 0.18s ease;
+}
+.nav-toggle__bars span:nth-child(1) { top: 0; }
+.nav-toggle__bars span:nth-child(2) { top: 8.75px; }
+.nav-toggle__bars span:nth-child(3) { top: 17.5px; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(1) { transform: translateY(8.75px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(2) { opacity: 0; transform: scaleX(0.2); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars span:nth-child(3) { transform: translateY(-8.75px) rotate(-45deg); }
+
+/* Mobilmeny: ligger som ett lager ovanpå sidan (flyttar inte ner innehållet) med dämpad bakgrund */
+@media (max-width: 860px) {
+  .v2-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    width: auto;
+    margin: 0;
+    padding: 0 var(--space-sm) var(--space-sm);
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 14px 24px rgba(27, 28, 26, 0.18);
+    max-height: calc(100vh - 80px);
+    max-height: calc(100dvh - 80px);
+    overflow-y: auto;
+    /* Stängd: osynlig men kvar i layouten, så att den kan rulla ut mjukt */
+    visibility: hidden;
+    opacity: 0;
+    clip-path: inset(0 -30px 100% -30px);
+    transform: translateY(-10px);
+    transition: clip-path 0.28s ease, opacity 0.22s ease, transform 0.28s ease, visibility 0s linear 0.28s;
+  }
+  .v2-nav.is-open {
+    visibility: visible;
+    opacity: 1;
+    clip-path: inset(0 -30px -40px -30px);
+    transform: none;
+    transition: clip-path 0.28s ease, opacity 0.22s ease, transform 0.28s ease, visibility 0s;
+  }
+  .v2-header::after {
+    content: "";
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 100vh;
+    background: rgba(27, 28, 26, 0.35);
+  }
+  .v2-header:has(.v2-nav.is-open)::after { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 0.25s ease, visibility 0s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-nav, .v2-nav.is-open, .v2-header::after { transition: none !important; }
+}

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boka tid – Medemus Psykiatrisk Mottagning</title>
+  <meta name="description" content="Boka tid hos Medemus med egen remiss. Fyll i formuläret så kontaktar vi dig. Här finns också prislista och avbokningsregler.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/site.css?v=1">
+  <link rel="stylesheet" href="../css/variant.css?v=2">
+</head>
+<body>
+
+  <a class="skip-link" href="#content">Hoppa till innehållet</a>
+
+  <header class="v2-header is-cta-visible" data-cta="always">
+    <div class="container v2-header__inner">
+      <a href="../index.html" class="v2-logo" aria-label="Medemus psykiatrisk mottagning – startsida">
+        <img src="../assets/images/medemus-logo.webp" alt="Medemus Psykiatrisk Mottagning">
+      </a>
+      <nav class="v2-nav" id="nav" aria-label="Huvudmeny">
+        <a href="../index.html" class="v2-nav__link">Hem</a>
+        <a href="behandling.html" class="v2-nav__link">Behandling</a>
+        <a href="utredning.html" class="v2-nav__link">Utredning</a>
+        <a href="om-oss.html" class="v2-nav__link">Om oss</a>
+        <a href="kontakt.html" class="v2-nav__link">Kontakt</a>
+        <a href="boka-tid.html" class="btn btn--primary v2-nav__cta">Boka tid</a>
+      </nav>
+      <a href="boka-tid.html" class="btn btn--primary v2-header__cta">Boka tid</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav" aria-label="Meny"><span class="nav-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span></button>
+    </div>
+  </header>
+
+  <main id="content">
+
+    <section class="pg-section pg-section--alt" aria-labelledby="boka-rubrik">
+      <div class="pg-wrap">
+        <h1 class="pg-title pg-title--above" id="boka-rubrik">Boka tid – egen remiss</h1>
+        <div class="boka-grid">
+          <form class="form-card form-card--wide" id="booking-form" novalidate>
+          <div class="field">
+            <label for="namn">Ditt namn *</label>
+            <input type="text" id="namn" name="namn" autocomplete="name" required aria-describedby="namn-error">
+            <p class="field__error" id="namn-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="personnummer">Ditt personnummer *</label>
+            <input type="text" id="personnummer" name="personnummer" autocomplete="off" required aria-describedby="personnummer-error">
+            <p class="field__error" id="personnummer-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="email">Din e-postadress *</label>
+            <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-error">
+            <p class="field__error" id="email-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="beskrivning">Lämna en kort beskrivning av de besvär du vill söka för. *</label>
+            <textarea id="beskrivning" name="beskrivning" rows="4" required aria-describedby="beskrivning-error"></textarea>
+            <p class="field__error" id="beskrivning-error" hidden></p>
+          </div>
+          <div class="field">
+            <label for="tid_med_besvar">Hur länge har besvären funnits? *</label>
+            <input type="text" id="tid_med_besvar" name="tid_med_besvar" autocomplete="off" required aria-describedby="tid_med_besvar-error">
+            <p class="field__error" id="tid_med_besvar-error" hidden></p>
+          </div>
+          <fieldset class="yesno">
+            <legend>Har du en pågående behandlingskontakt för dina besvär? *</legend>
+            <div class="yesno__opts">
+              <label class="pill"><input type="radio" name="behandlingskontakt" value="Ja" required><span>Ja</span></label>
+              <label class="pill"><input type="radio" name="behandlingskontakt" value="Nej"><span>Nej</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="yesno">
+            <legend>Har du eller har du haft något missbruk? *</legend>
+            <div class="yesno__opts">
+              <label class="pill"><input type="radio" name="missbruk" value="Ja" required><span>Ja</span></label>
+              <label class="pill"><input type="radio" name="missbruk" value="Nej"><span>Nej</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="yesno">
+            <legend>Tar du några mediciner? *</legend>
+            <div class="yesno__opts">
+              <label class="pill"><input type="radio" name="mediciner" value="Ja" required><span>Ja</span></label>
+              <label class="pill"><input type="radio" name="mediciner" value="Nej"><span>Nej</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="yesno">
+            <legend>Är du sjukskriven? *</legend>
+            <div class="yesno__opts">
+              <label class="pill"><input type="radio" name="sjukskriven" value="Ja" required><span>Ja</span></label>
+              <label class="pill"><input type="radio" name="sjukskriven" value="Nej"><span>Nej</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="meddelande">Eventuellt meddelande</label>
+            <textarea id="meddelande" name="meddelande" rows="4" aria-describedby="meddelande-error"></textarea>
+            <p class="field__error" id="meddelande-error" hidden></p>
+          </div>
+          <label class="check"><input type="checkbox" name="consent" required><span>Jag godkänner att mina uppgifter sparas. | <a href="integritetspolicy.html">Integritetspolicy</a></span></label>
+          <button type="submit" class="btn btn--primary btn--l">Skicka</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="boka-side">
+            <div class="side-card side-card--tint">
+              <div class="contact-card">
+          <p class="contact-card__label">E-post</p>
+          <div class="contact-card__row" data-copy-field>
+            <a class="contact-card__mail" href="mailto:kontakt@medemus.se">kontakt@medemus.se</a>
+            <button type="button" class="copy-field__btn" data-copy="kontakt@medemus.se" aria-label="Kopiera e-postadressen kontakt@medemus.se"><svg data-icon-copy viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H16"/></svg><svg data-icon-done hidden viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="copy-field__label">Kopiera</span></button>
+          </div>
+          <p class="visually-hidden" role="status" aria-live="polite" data-copy-status></p>
+        </div>
+              <p class="phone-line">Föredrar du att ringa? <a href="tel:0735001813">073 500 18 13</a></p>
+            </div>
+            <div class="side-card">
+              <h2 class="side-card__title">Priser</h2>
+              <dl class="price-list">
+                <div><dt>Läkarbesök</dt><dd>1&nbsp;900 kr</dd></div>
+                <div><dt>Telefontid</dt><dd>600 kr</dd></div>
+                <div><dt>Recept</dt><dd>250 kr</dd></div>
+              </dl>
+              <p class="side-card__note">Betalning sker med kort.</p>
+              <p class="side-card__note">Uteblivet besök, samt avbokning mindre än 24 timmar innan besökstiden, debiteras med 1&nbsp;900&nbsp;kr.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="v2-footer">
+    <div class="container">
+      <div class="v2-footer__grid">
+        <div>
+          <h2 class="v2-footer__title">Medemus Psykiatrisk Mottagning</h2>
+          <address class="v2-footer__text">World Trade Center<br>Teatergatan, Göteborg</address>
+        </div>
+        <div>
+          <h2 class="v2-footer__title">Kontakt</h2>
+          <p class="v2-footer__text"><a href="mailto:kontakt@medemus.se">kontakt@medemus.se</a></p>
+          <p class="v2-footer__text"><a href="tel:0735001813">073 500 18 13</a></p>
+        </div>
+        <div>
+          <h2 class="v2-footer__title">Avbokning</h2>
+          <p class="v2-footer__text">Uteblivet besök, samt avbokning med mindre än 24 timmars varsel innan besökstiden, debiteras med 1&nbsp;900&nbsp;kr.</p>
+        </div>
+      </div>
+      <div class="v2-footer__bottom">
+        <p>&copy; <span id="year"></span> Medemus Psykiatrisk Mottagning</p>
+        <p><a href="integritetspolicy.html">Integritetspolicy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=1"></script>
+</body>
+</html>

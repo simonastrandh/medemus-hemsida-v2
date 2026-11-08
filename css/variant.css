@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Variant 2 – samma struktur och text som medemus.se, men mer genomarbetad.
+   Navigering behålls från site.css. Sidfoten är grön.
+   Kontraster: --color-text på vit/ljus yta 10–11:1, --color-green-deep på vit 6,2:1
+   och på --color-green-tint 5,5:1, vit text på --color-green-deep 6,2:1,
+   dämpad grå text (--color-text-muted) på vit/ljus yta 5,3:1.
+   ========================================================================== */
+
+.pg-wrap { width: min(100% - 2rem, 1240px); margin-inline: auto; }
+.pg-section { padding-block: clamp(48px, 7vw, 96px); }
+.pg-section--alt { background: var(--color-surface); }
+
+/* --- Rubrik med grön accentlinje (under rubriken, eller över med --above) --- */
+.pg-title {
+  margin: 0 0 clamp(20px, 3vw, 32px);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.625rem, 2.2vw + 0.9rem, 2.75rem);
+  line-height: 1.22;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--color-text);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+.pg-title::after { content: ""; display: block; width: 56px; height: 5px; margin-top: 20px; border-radius: 3px; background: var(--color-green-primary); }
+.pg-title--above::after { display: none; }
+.pg-title--above::before { content: ""; display: block; width: 56px; height: 5px; margin-bottom: 20px; border-radius: 3px; background: var(--color-green-primary); }
+
+.pg-lead { margin: 0; max-width: none; font-size: clamp(1.0625rem, 0.4vw + 1rem, 1.3125rem); line-height: 1.65; color: var(--color-text); }
+.pg-text p { max-width: none; }
+.pg-text--stack { display: grid; gap: 16px; }
+.pg-text--stack p { margin: 0; font-size: 1.125rem; line-height: 1.7; }
+.pg-text--stack .pg-lead { font-size: clamp(1.125rem, 0.5vw + 1rem, 1.3125rem); }
+.pg-text--stack .pg-title { margin-bottom: 8px; }
+
+.pg-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 7vw, 96px); align-items: center; }
+.pg-row--top { align-items: start; }
+
+/* --- Foto med rundade hörn, skugga och grön bakgrundsyta bakom --- */
+.photo-frame { position: relative; margin: 0; isolation: isolate; padding: 0 24px 24px 0; }
+.photo-frame::before { content: ""; position: absolute; z-index: -1; inset: 24px 0 0 24px; border-radius: 32px; background: var(--color-green-tint); }
+.photo-frame img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 32px; box-shadow: 0 16px 36px rgba(27, 28, 26, 0.14); }
+.photo-frame--wide img { aspect-ratio: 11 / 10; }
+.photo-frame--tall img { aspect-ratio: 5 / 6; }
+
+/* --- Hero: stor inramad bild med knapp i mitten --- */
+.pg-hero { padding-block: 40px 72px; background: var(--color-bg); }
+.hero-frame { position: relative; overflow: hidden; border-radius: 32px; box-shadow: 0 24px 48px rgba(27, 28, 26, 0.16); aspect-ratio: 1240 / 620; background: var(--color-green-tint); }
+.hero-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+.hero-frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(27, 28, 26, 0) 55%, rgba(27, 28, 26, 0.36)); pointer-events: none; }
+.hero-frame__cta { position: absolute; z-index: 1; left: 50%; top: 58%; transform: translate(-50%, -50%); min-width: 220px; justify-content: center; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* --- Dragspel (Behandling) --- */
+.acc-stack { display: grid; gap: 12px; }
+.acc-stack .acc summary { text-transform: uppercase; color: var(--color-green-deep); font-size: 1.0625rem; letter-spacing: 0.01em; padding: 22px 28px; }
+.acc-stack .acc__body { padding: 0 28px 28px; }
+.acc-stack .acc__body p { font-size: 1.0625rem; line-height: 1.7; }
+
+/* --- Utredning --- */
+.callout { padding: 28px 36px; border-radius: 24px; background: var(--color-green-tint); color: var(--color-green-deep); font-weight: 500; font-size: 1.1875rem !important; line-height: 1.6 !important; }
+
+/* --- Kontaktkort: e-post med kopieringsknapp, telefon som dämpad textrad --- */
+.side-card { display: grid; gap: 16px; padding: 32px; border-radius: 24px; background: var(--color-white); border: 1px solid var(--color-border); }
+.side-card--tint { background: var(--color-green-tint); border-color: transparent; }
+.side-card__title { margin: 0; font-size: 1.375rem; text-transform: uppercase; }
+.side-card__note { margin: 0; font-size: 0.9375rem; line-height: 1.55; color: var(--color-text-muted); max-width: none; }
+.contact-card__label { margin: 0 0 8px; font-size: var(--fs-label); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-green-deep); }
+.contact-card__row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.contact-card__mail { font-family: var(--font-heading); font-weight: 600; font-size: clamp(1.125rem, 1vw + 0.9rem, 1.875rem); line-height: 1.3; color: var(--color-green-deep); text-decoration: none; overflow-wrap: normal; white-space: nowrap; }
+.boka-side .contact-card__mail { font-size: 1.375rem; }
+.contact-card__mail:hover { text-decoration: underline; text-underline-offset: 4px; }
+.contact-card .copy-field__btn { background: var(--color-white); color: var(--color-green-deep); border: 1.5px solid var(--color-green-dark); min-height: 44px; padding: 10px 18px; }
+.contact-card .copy-field__btn:hover { background: var(--color-green-tint); }
+.contact-card__row.is-copied .copy-field__btn { background: var(--color-green-deep); color: var(--color-white); border-color: var(--color-green-deep); }
+.phone-line { margin: 0; padding-left: 32px; font-size: 1.125rem; color: var(--color-text-muted); }
+.phone-line a { white-space: nowrap; font-weight: 600; color: var(--color-green-deep); text-decoration: underline; text-underline-offset: 3px; }
+.side-card--tint .phone-line { padding-left: 0; }
+.contact-stack { display: grid; gap: 16px; }
+
+/* --- Boka tid --- */
+.boka-grid { display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: 48px; align-items: start; }
+.boka-side { display: grid; gap: 24px; }
+.form-card--wide { display: grid; gap: 24px; padding: 40px; border-radius: 24px; background: var(--color-white); border: 1px solid var(--color-border); max-width: none; margin: 0; }
+.form-card--wide .field { display: grid; gap: 8px; }
+.form-card--wide label { font-weight: 500; font-size: 1.0625rem; line-height: 1.5; }
+.form-card--wide textarea { width: 100%; min-height: 128px; padding: 14px 18px; border: 1.5px solid var(--color-border-interactive); border-radius: 12px; background: var(--color-white); font: inherit; resize: vertical; }
+.form-card--wide input[type="text"], .form-card--wide input[type="email"] { width: 100%; min-height: 56px; padding: 0 18px; border: 1.5px solid var(--color-border-interactive); border-radius: 12px; background: var(--color-white); font: inherit; }
+.form-card--wide textarea:focus-visible, .form-card--wide input:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.yesno { margin: 0; padding: 0; border: 0; display: grid; gap: 12px; min-width: 0; }
+.yesno legend { padding: 0; margin-bottom: 12px; font-weight: 500; font-size: 1.0625rem; line-height: 1.5; }
+.yesno__opts { display: flex; gap: 12px; }
+.pill { position: relative; display: inline-flex; }
+.pill input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.pill span { display: inline-flex; align-items: center; justify-content: center; min-width: 112px; min-height: 48px; padding: 0 20px; border: 1.5px solid var(--color-border-interactive); border-radius: 12px; font-weight: 500; background: var(--color-white); }
+.pill input:checked + span { background: var(--color-green-tint); border-color: var(--color-green-deep); color: var(--color-green-deep); font-weight: 600; }
+.pill input:focus-visible + span { outline: var(--focus-ring); outline-offset: 2px; }
+.price-list { display: grid; margin: 0; }
+.price-list > div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+.price-list dt { margin: 0; }
+.price-list dd { margin: 0; font-weight: 700; color: var(--color-green-deep); }
+
+/* --- Sidfot: grön --- */
+.v2-footer { position: relative; background: var(--color-green-deep); color: #eef5de; }
+.v2-footer::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: var(--color-green-primary); }
+.v2-footer__grid { border-bottom-color: rgba(238, 245, 222, 0.28); }
+.v2-footer__title { color: var(--color-green-tint); }
+.v2-footer__bottom { color: #eef5de; }
+.v2-footer a:hover { color: var(--color-green-tint); text-decoration: underline; }
+
+/* --- Smal skärm --- */
+@media (max-width: 860px) {
+  .pg-row { grid-template-columns: 1fr; }
+  .pg-hero { padding-block: 16px 32px; }
+  .hero-frame { border-radius: 20px; aspect-ratio: 358 / 300; }
+  .hero-frame__cta { min-width: 0; top: 60%; padding-inline: 1.75rem; }
+  .photo-frame { padding: 0 16px 16px 0; }
+  .photo-frame::before { inset: 16px 0 0 16px; border-radius: 20px; }
+  .photo-frame img { border-radius: 20px; }
+  .photo-frame--tall img { aspect-ratio: 4 / 5; }
+  .boka-grid { grid-template-columns: 1fr; gap: 24px; }
+  .form-card--wide { padding: 24px 20px; }
+  .side-card { padding: 24px 20px; }
+  .phone-line { padding-left: 20px; }
+  .acc-stack .acc summary { padding: 18px 20px; font-size: 0.9375rem; }
+  .acc-stack .acc__body { padding: 0 20px 24px; }
+  .callout { padding: 20px; }
+}
+@media (max-width: 560px) {
+  .contact-card__mail, .boka-side .contact-card__mail { font-size: 1.125rem; }
+  .contact-card__row .copy-field__label { display: none; }
+  .contact-card .copy-field__btn { padding: 10px 12px; }
+}

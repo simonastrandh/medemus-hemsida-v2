@@ -1,0 +1,67 @@
+/* ==========================================================================
+   Grundstil — typografi och länkar
+   ========================================================================== */
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: var(--lh-heading);
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+h1 { font-size: var(--fs-xxxl); letter-spacing: -0.5px; }
+h2 { font-size: var(--fs-xxl); letter-spacing: -0.3px; }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); font-weight: 500; }
+
+p {
+  max-width: 65ch;
+}
+
+p + p {
+  margin-top: var(--space-sm);
+}
+
+small, .text-small {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--color-text-muted);
+}
+
+.text-label {
+  display: inline-block;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-green-deep);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Synlig, tydlig fokusindikering för tangentbordsnavigering (WCAG 2.4.7) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.btn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}

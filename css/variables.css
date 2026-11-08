@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Designvariabler — Medemus designsystem
+   Källan till sanning för färger, typsnitt och avstånd.
+   Ändra här så uppdateras hela sidan. Alla textfärger nedan är kontrollerade
+   mot WCAG 2.1 AA (se referens/dokument/designsystem.html för kontrastmatris).
+   ========================================================================== */
+:root {
+  /* ---- Grundfärger (från logotypen) ---- */
+  --color-green-primary: #9bc53d; /* Logotyp, ljus halva. ENDAST som yta — ej som liten text på vitt */
+  --color-green-dark:    #6e9a2b; /* Logotyp, mörk halva. ENDAST som yta/stora element */
+  --color-green-deep:    #4a6b1f; /* Tillgänglig grön text/ikon — 6,1:1 på vitt */
+  --color-green-tint:    #eef5de; /* Ljus grön bakgrundston (badges, ghost-knapp) */
+
+  /* ---- Text & neutrala färger ---- */
+  --color-text:        #3a3a3c; /* Primär text — 11,3:1 på vitt (AAA) */
+  --color-text-muted:  #6b6b6e; /* Sekundär text — 5,3:1 på vitt (AA) */
+  --color-text-faint:  #9a9a9d; /* ENDAST placeholder/inaktiverat läge */
+
+  /* ---- Ytor ---- */
+  --color-bg:      #ffffff;
+  --color-surface: #f7f8f4; /* Sidbakgrund, sektionsavbrott */
+  --color-border:  #e2e4dc; /* Dekorativa kantlinjer (ej funktionella) */
+  --color-border-interactive: #80847a; /* Kantlinje på inputs/komponenter — 3,8:1 */
+
+  /* ---- Mörkt tema (Instagram-stilen) ---- */
+  --color-dark:       #1b1c1a; /* Mörk bakgrund — vit text 16,5:1 */
+  --color-dark-2:     #262824; /* Kort/ytor på mörk bakgrund */
+  --color-dark-line:  #3a3d36;
+  --color-on-dark-muted: #c9ccc2; /* Sekundär text på mörkt — 10,5:1 */
+  --color-white:      #ffffff;
+  --color-on-green:   #2b3a14; /* Text på grön yta — 6,1:1 */
+  --color-dark-overlay: rgba(27, 28, 26, 0.84); /* Mörkt lager över foto */
+  --color-green-olive: #7f9a2b; /* Cirkelring i Instagram-grafiken. ENDAST dekor */
+
+  /* ---- Funktionsfärger ---- */
+  --color-primary:       var(--color-green-primary);
+  --color-primary-hover: var(--color-green-deep);
+  --color-accent:        #2e6f8e; /* Länkar, fokusringar — 5,6:1 på vitt */
+
+  --color-success-text:    #3d7a3d;
+  --color-success-surface: #e3f1e3;
+  --color-error-text:      #b33a3a;
+  --color-error-surface:   #fbeaea;
+
+  /* ---- Typografi ---- */
+  --font-heading: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:    "SFMono-Regular", Consolas, monospace;
+
+  --fs-base: 1rem;      /* 16px — minsta brödtextstorlek */
+  --fs-sm:   0.8125rem; /* 13px — small/caption */
+  --fs-label: 0.75rem;  /* 12px — eyebrow/label (minsta storlek, versaler) */
+  --fs-lg:   1.1875rem; /* 19px — H4 */
+  --fs-xl:   1.5rem;    /* 24px — H3 */
+  --fs-xxl:  clamp(1.75rem, 3vw + 1rem, 2.125rem);  /* 28–34px — H2 */
+  --fs-xxxl: clamp(2rem, 4vw + 1rem, 3rem);         /* 32–48px — H1 */
+
+  --lh-heading: 1.2;
+  --lh-body: 1.65;
+
+  /* ---- Avstånd ---- */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+
+  /* ---- Övrigt ---- */
+  --container-width: 1100px;
+  --radius: 10px;
+  --radius-pill: 999px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --transition: 0.2s ease;
+  --focus-ring: 3px solid var(--color-accent);
+}
